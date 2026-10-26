@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yura Gao</title>
+<meta content="cover" name="claude:viewport-fit-sides"/>
+<meta content="Yura (Yu) Gao is a Ph.D. student in Computational Mathematics, Science and Engineering at Michigan State University, working on AI methods for RNA structure prediction and modeling in the Hou Lab." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&amp;family=Public+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+/* Layout: sticky sapphire nav band on top; below it a sticky profile column on the left and one reading column of sections on the right; stacks to one column on phones. */
+:root {
+  --sea-50: #ffffff;
+  --paper: #ffffff;
+  --ink: #1d1a33;
+  --ink-soft: #5c5878;
+  --line: #e6e3f3;
+  --sapphire: #6352c4;
+  --sapphire-deep: #43378f;
+  --tide: #eeebfb;
+  --on-band: #ffffff;
+  --on-band-soft: #cfc8f2;
+  --band: #4d4196;
+  --card: #fbfaff;
+
+  --f-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --nav-h: 56px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sea-50: #110f1f; --paper: #19162b; --ink: #ece9f7; --ink-soft: #aba6c8; --line: #2c2748;
+    --sapphire: #ab9ff7; --sapphire-deep: #cbc2ff; --tide: #262046;
+    --on-band: #ffffff; --on-band-soft: #c6bff0; --band: #342b78; --card: #19162b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sea-50: #110f1f; --paper: #19162b; --ink: #ece9f7; --ink-soft: #aba6c8; --line: #2c2748;
+  --sapphire: #ab9ff7; --sapphire-deep: #cbc2ff; --tide: #262046;
+  --on-band: #ffffff; --on-band-soft: #c6bff0; --band: #342b78; --card: #19162b;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--sea-50);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 60; background: var(--band);
+}
+a { color: var(--sapphire); text-decoration: none; text-underline-offset: 3px; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--sapphire); outline-offset: 2px; border-radius: 3px; }
+
+/* language switching */
+
+/* ---------- top nav ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: var(--band);
+  color: var(--on-band);
+  box-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+.topbar-inner {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  height: var(--nav-h);
+  display: flex; align-items: center; gap: 20px;
+}
+.brand {
+  font-family: var(--f-display); font-size: 1.25rem; font-weight: 500;
+  color: var(--on-band); white-space: nowrap; letter-spacing: .01em;
+}
+.brand:hover { text-decoration: none; }
+.navscroll { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.navscroll::-webkit-scrollbar { display: none; }
+.navlinks { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; white-space: nowrap; }
+.navlinks a {
+  display: block; padding: 6px 11px; border-radius: 6px;
+  color: var(--on-band-soft); font-size: .86rem; font-weight: 500;
+  transition: color .15s, background .15s;
+}
+.navlinks a:hover { color: var(--on-band); background: rgba(255,255,255,.08); text-decoration: none; }
+.navlinks a.active { color: var(--on-band); background: rgba(255,255,255,.14); }
+
+/* ---------- page grid ---------- */
+.page {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+  display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 52px; align-items: start;
+}
+@media (max-width: 900px) {
+  .page { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 24px 48px; }
+}
+
+/* ---------- profile ---------- */
+.profile { position: sticky; top: calc(var(--nav-h) + 28px + env(safe-area-inset-top, 0px)); display: grid; gap: 14px; }
+@media (max-width: 900px) {
+  .profile { position: static; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 16px 20px; }
+  .profile .p-extra { grid-column: 1 / -1; }
+}
+.avatar {
+  width: 100%; max-width: 150px; aspect-ratio: 1; border-radius: 50%;
+  background: linear-gradient(150deg, var(--sapphire) 0%, var(--band) 100%);
+  display: grid; place-items: center; overflow: hidden; position: relative;
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 5px var(--line);
+}
+.avatar span { font-family: var(--f-display); font-size: 2.6rem; color: #fff; font-style: italic; }
+.avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 900px) { .avatar span { font-size: 2.2rem; } }
+.p-name { font-family: var(--f-display); font-size: 1.45rem; font-weight: 500; line-height: 1.15; margin: 0; text-wrap: balance; }
+.p-name em { color: var(--ink-soft); font-weight: 400; font-size: .72em; display: block; margin-top: 4px; }
+.p-role { color: var(--ink-soft); font-size: .82rem; line-height: 1.5; margin: 6px 0 0; }
+.p-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: .84rem; }
+.p-links li { display: flex; gap: 10px; align-items: baseline; min-width: 0; }
+.p-links .k { font-family: var(--f-mono); font-size: .7rem; color: var(--ink-soft); width: 58px; flex-shrink: 0; text-transform: uppercase; letter-spacing: .06em; }
+.p-links .v { min-width: 0; overflow-wrap: anywhere; }
+.copy {
+  font: 500 .7rem var(--f-body); border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft);
+  border-radius: 4px; padding: 1px 6px; margin-left: 4px; cursor: pointer;
+}
+.hairpin {
+  border-top: 1px solid var(--line); padding-top: 14px;
+  font-family: var(--f-mono); font-size: .72rem; color: var(--ink-soft); line-height: 1.5;
+}
+.hairpin .seq { color: var(--sapphire); letter-spacing: .18em; }
+.hairpin .db { letter-spacing: .18em; }
+.hairpin small { display: block; font-family: var(--f-body); font-size: .72rem; margin-top: 4px; }
+
+/* ---------- sections ---------- */
+main { min-width: 0; display: grid; gap: 52px; }
+section { scroll-margin-top: calc(var(--nav-h) + 20px + env(safe-area-inset-top, 0px)); min-width: 0; }
+h2 {
+  font-family: var(--f-display); font-weight: 500; font-size: 1.6rem; margin: 0 0 18px;
+  display: flex; align-items: baseline; gap: 12px; text-wrap: balance;
+}
+h2::after { content: ""; flex: 1; height: 1px; background: var(--line); transform: translateY(-6px); }
+h3 { font-family: var(--f-body); font-size: 1rem; font-weight: 600; margin: 0; line-height: 1.4; }
+p { margin: 0 0 12px; max-width: 68ch; }
+.lead { font-family: var(--f-display); font-size: 1.32rem; line-height: 1.5; margin-bottom: 16px; color: var(--ink); }
+.lead strong { font-weight: 500; color: var(--sapphire-deep); }
+.muted { color: var(--ink-soft); }
+.mono { font-family: var(--f-mono); font-size: .78rem; font-variant-numeric: tabular-nums; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; padding: 0; list-style: none; }
+.chips li { background: var(--tide); color: var(--sapphire-deep); font-size: .82rem; font-weight: 500; padding: 4px 11px; border-radius: 999px; }
+
+/* news */
+.news { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 2px solid var(--tide); }
+.news li { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 16px; padding: 9px 0 9px 18px; position: relative; }
+.news li::before { content: ""; position: absolute; left: -6px; top: 17px; width: 10px; height: 10px; border-radius: 50%; background: var(--paper); border: 2px solid var(--sapphire); }
+.news .mono { color: var(--sapphire); padding-top: 3px; }
+@media (max-width: 520px) { .news li { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+
+/* research cards */
+.rgrid { display: grid; gap: 16px; }
+.rcard { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; min-width: 0; }
+.rcard header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 8px; }
+.rcard h3 { font-family: var(--f-display); font-size: 1.28rem; font-weight: 500; }
+.status { font-family: var(--f-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--sapphire); }
+.rcard ul { margin: 8px 0 0; padding-left: 18px; }
+.rcard li { margin-bottom: 4px; }
+.tags { font-family: var(--f-mono); font-size: .74rem; color: var(--ink-soft); margin-top: 12px; }
+.sub-h { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin: 26px 0 10px; }
+
+/* publications */
+.pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: pub; }
+.pub { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.pub:last-child { border-bottom: 0; padding-bottom: 0; }
+.venue {
+  align-self: start; background: var(--band); color: var(--on-band); border-radius: 6px;
+  padding: 6px 8px; text-align: center; font-family: var(--f-mono); font-size: .72rem; line-height: 1.3; font-weight: 500;
+}
+.venue small { display: block; color: var(--on-band-soft); font-weight: 400; }
+.pub-title { font-weight: 600; font-size: 1rem; line-height: 1.45; margin: 0 0 4px; }
+.pub-authors { font-size: .9rem; color: var(--ink-soft); margin: 0 0 2px; }
+.pub-authors b { color: var(--ink); font-weight: 600; }
+.pub-where { font-size: .88rem; font-style: italic; margin: 0; }
+.pub-links { display: flex; gap: 12px; margin-top: 6px; font-size: .84rem; flex-wrap: wrap; }
+.pub-links .badge { font-family: var(--f-mono); font-size: .7rem; color: var(--sapphire); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+.note { font-size: .8rem; color: var(--ink-soft); margin-top: 14px; }
+@media (max-width: 560px) { .pub { grid-template-columns: minmax(0, 1fr); gap: 8px; } .venue { justify-self: start; } }
+
+/* timeline entries (education / experience) */
+.entries { display: grid; gap: 0; }
+.entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.entry:first-child { padding-top: 0; }
+.entry:last-child { border-bottom: 0; }
+.entry .org { font-weight: 600; }
+.entry .where { color: var(--ink-soft); font-weight: 400; }
+.entry .date { font-family: var(--f-mono); font-size: .78rem; color: var(--sapphire); white-space: nowrap; font-variant-numeric: tabular-nums; padding-top: 2px; }
+.entry .deg { grid-column: 1 / -1; font-style: italic; font-family: var(--f-display); font-size: 1.05rem; }
+.entry .detail { grid-column: 1 / -1; font-size: .9rem; color: var(--ink-soft); }
+.entry ul { grid-column: 1 / -1; margin: 6px 0 0; padding-left: 18px; font-size: .92rem; }
+.entry li { margin-bottom: 3px; }
+@media (max-width: 520px) { .entry { grid-template-columns: minmax(0, 1fr); } }
+
+/* simple lists */
+.plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.plain li { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 16px; }
+.plain .mono { color: var(--sapphire); padding-top: 3px; }
+@media (max-width: 520px) { .plain li { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+@media (max-width: 700px) { .two { grid-template-columns: minmax(0, 1fr); gap: 52px; } }
+
+.proj { display: grid; gap: 14px; }
+.proj > div { padding-left: 14px; border-left: 2px solid var(--tide); }
+.proj p { font-size: .92rem; margin: 2px 0 0; }
+
+footer {
+  border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .8rem;
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 32px;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+<div class="topbar-inner">
+<a class="brand" href="#about">Yura Gao</a>
+<nav aria-label="Sections" class="navscroll">
+<ul class="navlinks">
+<li><a href="#about">About</a></li>
+<li><a href="#news">News</a></li>
+<li><a href="#research">Research</a></li>
+<li><a href="#publications">Publications</a></li>
+<li><a href="#education">Education</a></li>
+<li><a href="#experience">Experience</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#service">Service &amp; Talks</a></li>
+<li><a href="#honors">Honors</a></li>
+</ul>
+</nav>
+
+</div>
+</header>
+<div class="page">
+<!-- ===== Profile column ===== -->
+<aside class="profile">
+<div class="avatar">
+<span aria-hidden="true">YG</span>
+<img alt="Yura Gao" onerror="this.remove()" src="https://jiehou-lab.github.io/images/people/yura-gao.jpg"/>
+</div>
+<div>
+<h1 class="p-name">Yura Gao<em>Yu Gao</em></h1>
+<p class="p-role">
+Ph.D. Student, Computational Mathematics, Science &amp; Engineering<br/>Michigan State University
+
+</p>
+</div>
+<div class="p-extra" style="display:grid; gap:14px;">
+<ul class="p-links">
+<li><span class="k">Email</span><span class="v"><span id="email">gaoyu13@msu.edu</span></span></li>
+<li><span class="k">Lab</span><span class="v"><a href="https://jiehou-lab.github.io/" rel="noopener" target="_blank">Hou Lab, MSU</a></span></li>
+<li><span class="k">Advisor</span><span class="v"><a href="https://jiehou-lab.github.io/people.html#pi" rel="noopener" target="_blank">Dr. Jie Hou</a></span></li>
+<li><span class="k">Dept</span><span class="v"><a href="https://cmse.msu.edu/" rel="noopener" target="_blank">CMSE, MSU</a></span></li>
+<li><span class="k">Based</span><span class="v">East Lansing, MI, USA</span></li>
+</ul>
+<div aria-label="GNRA tetraloop hairpin in dot-bracket notation" class="hairpin">
+<div>5′ <span class="seq">GGCGAAAGCC</span> 3′</div>
+<div><span style="visibility:hidden">5′</span> <span class="db">(((....)))</span></div>
+<small>A GNRA tetraloop hairpin, one of the most common RNA structural motifs.</small>
+</div>
+</div>
+</aside>
+<!-- ===== Content column ===== -->
+<main>
+<section id="about">
+<h2>About</h2>
+<p class="lead">I'm Yura Gao, a first-year Ph.D. student majoring in <strong>Computational Mathematics, Science and Engineering (CMSE)</strong> at Michigan State University. I work in the <a href="https://jiehou-lab.github.io/" rel="noopener" target="_blank">Hou Lab</a> under the supervision of <a href="https://jiehou-lab.github.io/people.html#pi" rel="noopener" target="_blank">Dr. Jie Hou</a>.</p>
+
+<p>Before joining MSU, I received my M.S. in Applied Data Analytics from <strong>Boston University</strong> (2025). I earned my bachelor's degrees in Robotics Engineering from the <strong>University of Detroit Mercy</strong> and in Mechanical Design, Manufacturing and Automation from <strong>Beijing University of Chemical Technology</strong> (2023).</p>
+
+<p>My research interests lie at the intersection of machine learning and structural biology, with a focus on RNA. The Hou Lab develops deep learning and data-driven methods for protein and RNA structure prediction, cryo-EM-assisted modeling, and structure quality assessment, and is building LLM-based agents that automate structural analysis. Within this direction, I work on <a href="#research">ARSMA</a>, an open-source AI-driven platform for RNA motif structural analysis, where I lead the cryo-EM workflow for motif segmentation, and on <a href="#research">MoTangler</a>. Looking ahead, I am especially interested in structural representation learning and generative modeling for RNA 3D structure.</p>
+
+<div class="sub-h" style="margin-top:20px; margin-bottom:0">Research interests</div>
+<ul class="chips" style="margin-top:10px">
+<li>RNA structure prediction</li>
+<li>RNA motif analysis</li>
+<li>Structural representation learning</li>
+<li>Generative modeling</li>
+<li>Cryo-EM</li>
+<li>LLM agents for science</li>
+</ul>
+</section>
+<section id="news">
+<h2>News</h2>
+<ul class="news">
+<li><span class="mono">Oct 2026</span><span>Served as a co-reviewer for 5 submissions to <b>IEEE BigData 2026</b>.</span></li>
+<li><span class="mono">Sep 2026</span><span>Our lab's <b>ARSMA</b> platform for RNA motif structural analysis was presented at the SLU-IDBI Annual Research Symposium.</span></li>
+<li><span class="mono">Jan 2026</span><span>Started my Ph.D. in CMSE at Michigan State University and joined the <a href="https://jiehou-lab.github.io/" rel="noopener" target="_blank">Hou Lab</a>.</span></li>
+<li><span class="mono">2025</span><span>Co-first-author paper on time-series trends of medals published in <i>Computer Sciences &amp; Mathematics Forum</i> (ITISE 2025).</span></li>
+<li><span class="mono">Jan 2025</span><span>Completed my M.S. in Applied Data Analytics at Boston University.</span></li>
+<li><span class="mono">Nov 2024</span><span>Paper on climate risk mitigation for university facilities in the Proceedings of the 55th DSI Conference, Phoenix.</span></li>
+<li><span class="mono">Oct 2024</span><span>Our poster was selected as a <b>Poster Competition Finalist</b> at the INFORMS Annual Meeting, Seattle.</span></li>
+</ul>
+</section>
+<section id="research">
+<h2>Research</h2>
+<div class="rgrid">
+<article class="rcard">
+<header>
+<h3>ARSMA</h3>
+<span class="status">Ongoing · Hou Lab</span>
+</header>
+<p>An open-source, AI-driven platform for advanced RNA motif structural analysis. ARSMA brings together motif extraction, structural analysis, clustering, and cryo-EM processing, with the AutoRNA multi-agent system orchestrating the workflow.</p>
+
+<ul>
+<li>Led development and validation of the cryo-EM workflow for RNA motif segmentation: automated density map retrieval, motif-centered map extraction, and structural quality evaluation across benchmark cases.</li>
+<li>Ran end-to-end testing across ARSMA workflows to improve pipeline robustness and reproducibility.</li>
+<li>Debugged and optimized multi-agent code integration and workflow orchestration.</li>
+</ul>
+
+<div class="tags">cryo-EM · RNA motifs · multi-agent LLM · Python</div>
+</article>
+<article class="rcard">
+<header>
+<h3>MoTangler</h3>
+<span class="status">Ongoing · Hou Lab</span>
+</header>
+<p class="muted">Project details coming soon.</p>
+</article>
+</div>
+<div class="sub-h">Earlier research · Boston University</div>
+<div class="rgrid">
+<article class="rcard">
+<header>
+<h3>Decision Support for Climate Risk Mitigation</h3>
+
+<span class="status">2024 – 2025 · RA</span>
+</header>
+<p>Built an R Shiny decision support tool that ranks mitigation strategies for university facilities using AHP, pairwise comparisons, and indifference probabilities, with time-series forecasts of high-wind events and color-coded cost-benefit matrices for facility managers.</p>
+
+<div class="tags">AHP · time-series forecasting · R Shiny</div>
+</article>
+<article class="rcard">
+<header>
+<h3>Time-Series Trends of Medals</h3>
+
+<span class="status">2024 – 2025</span>
+</header>
+<p>Analyzed 850+ medals from 1800 to 2025, using hierarchical clustering to trace shifts in material, size, and composition, and random forest and logistic regression models to classify medals as pre- or post-WWII with 87% accuracy.</p>
+
+<div class="tags">hierarchical clustering · random forest · Python</div>
+</article>
+</div>
+</section>
+<section id="publications">
+<h2>Publications</h2>
+<ol class="pubs">
+<li class="pub">
+<div class="venue">ITISE<small>2025</small></div>
+<div>
+<p class="pub-title">Analyzing and Classifying Time-Series Trends in Medals</p>
+<p class="pub-authors">Liang, M.<sup>†</sup>, <b>Gao, Y.</b><sup>†</sup>, &amp; Pinsky, E.</p>
+<p class="pub-where">Computer Sciences &amp; Mathematics Forum, 11(1), 9, 2025.</p>
+<div class="pub-links">
+<a href="https://doi.org/10.3390/cmsf2025011009" rel="noopener" target="_blank">DOI</a>
+<span class="badge">Co-first author</span>
+</div>
+</div>
+</li>
+<li class="pub">
+<div class="venue">DSI<small>2024</small></div>
+<div>
+<p class="pub-title">Supporting Climate Risk Mitigation Decision Making for University Facilities</p>
+<p class="pub-authors">Maleyeff, J., Srivichaiin, K., <b>Gao, Y.</b>, Dande, K., &amp; Weidman, D.</p>
+<p class="pub-where">Proceedings of the 55th Decision Sciences Institute Conference, Phoenix, AZ, November 2024.</p>
+</div>
+</li>
+</ol>
+<p class="note"><sup>†</sup> Equal contribution.</p>
+</section>
+<section id="education">
+<h2>Education</h2>
+<div class="entries">
+<div class="entry">
+<span class="org">Michigan State University <span class="where">· East Lansing, MI</span></span>
+<span class="date">Jan 2026 – Present</span>
+<span class="deg">Ph.D. in Computational Mathematics, Science and Engineering</span>
+<span class="detail">Advisor: Dr. Jie Hou</span>
+</div>
+<div class="entry">
+<span class="org">Boston University <span class="where">· Boston, MA</span></span>
+<span class="date">Sep 2023 – Jan 2025</span>
+<span class="deg">M.S. in Applied Data Analytics</span>
+<span class="detail">GPA 3.76 / 4.0</span>
+</div>
+<div class="entry">
+<span class="org">University of Detroit Mercy <span class="where">· Detroit, MI</span></span>
+<span class="date">Sep 2022 – May 2023</span>
+<span class="deg">B.E. in Robotics</span>
+</div>
+<div class="entry">
+<span class="org">Beijing University of Chemical Technology <span class="where">· Beijing, China</span></span>
+<span class="date">Sep 2019 – Jul 2023</span>
+<span class="deg">B.E. in Mechanical Design, Manufacturing, and Automation</span>
+</div>
+</div>
+</section>
+<section id="experience">
+<h2>Experience</h2>
+<div class="entries">
+<div class="entry">
+<span class="org">Alibaba Group <span class="where">· Intern</span></span>
+<span class="date">May 2025 – Aug 2025</span>
+<ul>
+<li>Built an automated scraping system (requests, Selenium) that turned Twitter sentiment and Hong Kong stock reports into structured datasets.</li>
+<li>Cleaned data with SQL and Python, built Power BI and matplotlib visualizations, and applied SVM models to improve prediction accuracy.</li>
+</ul>
+
+</div>
+<div class="entry">
+<span class="org">Boston University <span class="where">· Research Assistant</span></span>
+<span class="date">Jan 2024 – Jan 2025</span>
+<ul><li>Implemented a climate risk mitigation decision support system in R Shiny and built simulation frameworks to compare strategies under uncertainty.</li></ul>
+
+</div>
+<div class="entry">
+<span class="org">Boston University <span class="where">· Teaching Assistant</span></span>
+<span class="date">Sep 2024 – Jan 2025</span>
+<ul><li>Computational Mathematics for Machine Learning, with Prof. Eugene Pinsky: office hours, grading, and helping students through difficult concepts.</li></ul>
+
+</div>
+<div class="entry">
+<span class="org">ByteDance <span class="where">· AI Engineering Assistant</span></span>
+<span class="date">Jun 2023 – Sep 2023</span>
+<ul><li>Helped build the data pipeline for the Doubao LLM, automating cleaning and preprocessing of 100,000+ unstructured text entries, and created a standardized prompt knowledge base for AIGC.</li></ul>
+
+</div>
+<div class="entry">
+<span class="org">Beijing Dongchen Lianchuang Co., Ltd. <span class="where">· Product Assistant</span></span>
+<span class="date">May 2022 – Aug 2022</span>
+<ul><li>Cleaned subsidiary data in Excel and R and helped plan statistical models and knowledge-graph database structures.</li></ul>
+
+</div>
+</div>
+</section>
+<section id="projects">
+<h2>Selected Projects</h2>
+<div class="proj">
+<div>
+<h3>Medical Navigation and Temperature Measurement Robot <span class="muted mono">· Undergraduate thesis</span></h3>
+<p>ROS robot with A* path planning, multi-point navigation, and obstacle avoidance, plus voice recognition, face detection, and Arduino-based temperature measurement. Led the team. <a href="https://m.youtube.com/watch?v=1tR7VPbZPvk" rel="noopener" target="_blank">Demo video</a></p>
+
+</div>
+<div>
+<h3>Multilingual Movie Review Sentiment Analysis</h3>
+<p>BERT and BART for sentiment classification (86.13% accuracy) and summarization, with a Streamlit interface supporting English, Chinese, French, and Spanish.</p>
+
+</div>
+<div>
+<h3>Speech-to-Text and Emotion Recognition</h3>
+<p>Conv1D and bidirectional LSTM model on MFCC features of the Toronto Emotional Speech Set (2,800 clips, 7 emotions), reaching 99.33% test accuracy.</p>
+
+</div>
+</div>
+</section>
+<section id="service">
+<h2>Service &amp; Talks</h2>
+<div class="two">
+<div>
+<div class="sub-h" style="margin-top:0">Peer review</div>
+<ul class="plain">
+<li><span class="mono">2026</span><span>Co-reviewer, IEEE International Conference on Big Data (IEEE BigData 2026), 5 papers</span></li>
+</ul>
+<div class="sub-h">Teaching</div>
+<ul class="plain">
+<li><span class="mono">Fall 2024</span><span>TA, Computational Mathematics for Machine Learning, Boston University</span></li>
+</ul>
+</div>
+<div>
+<div class="sub-h" style="margin-top:0">Presentations</div>
+<ul class="plain">
+<li><span class="mono">2025</span><span>ITISE 2025, “Analyzing and Classifying Time-Series Trends of Medals”</span></li>
+<li><span class="mono">Nov 2024</span><span>55th DSI Annual Conference, Phoenix, AZ</span></li>
+<li><span class="mono">Oct 2024</span><span>INFORMS Annual Meeting, Seattle, WA (poster)</span></li>
+<li><span class="mono">2024</span><span>Northeast DSI (NEDSI) Conference</span></li>
+<li><span class="mono">2024</span><span>BU Campus Climate Lab Symposium</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="honors">
+<h2>Honors</h2>
+<ul class="plain">
+<li><span class="mono">Oct 2024</span><span>Poster Competition Finalist, INFORMS Annual Meeting, for “DSS for Climate Mitigation Using Indifference Probabilities to Measure Impact Utilities”</span></li>
+</ul>
+<p class="muted" style="margin-top:28px; font-size:.9rem;">Outside research, I enjoy snowboarding, singing, and baking.</p>
+</section>
+</main>
+</div>
+<footer>
+<span>© 2026 Yura Gao</span>
+<span>Last updated October 2026</span>
+</footer>
+<script>
+(function () {
+  // copy email
+  var btn = document.getElementById('copy-email');
+  if (btn) btn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    var done = function () {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+    };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  });
+
+  // highlight the section in view
+  var links = Array.prototype.slice.call(document.querySelectorAll('.navlinks a'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  function activate(id) {
+    links.forEach(function (a) { a.classList.toggle('active', a === map[id]); });
+    var a = map[id];
+    if (a && a.scrollIntoView) {
+      var box = a.closest('.navscroll');
+      var left = a.offsetLeft - box.clientWidth / 2 + a.offsetWidth / 2;
+      box.scrollTo({ left: left, behavior: 'smooth' });
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) activate(e.target.id); });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+  }
+  activate('about');
+})();
+</script>
+</body>
+</html>
