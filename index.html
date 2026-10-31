@@ -169,15 +169,14 @@ p { margin: 0 0 12px; max-width: 84ch; }
 
 /* about: text + school logos */
 .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 44px; align-items: start; }
-.logos { display: grid; gap: 14px; }
-.logo-card { display: grid; justify-items: center; gap: 6px; padding: 16px 14px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--logo-bg); text-align: center; }
-.logo-card:hover { text-decoration: none; border-color: var(--sapphire); }
-.logo-card img { height: 72px; width: 100%; object-fit: contain; }
-.logo-card .lc-name { font-weight: 600; font-size: .86rem; line-height: 1.3; color: #1d1a33; }
-.logo-card .lc-deg { font-family: var(--f-mono); font-size: .7rem; color: #6352c4; letter-spacing: .04em; }
+.logos { display: grid; gap: 28px; padding-top: 6px; }
+.logos a { display: block; overflow: hidden; border-radius: 3px; }
+.logos img { display: block; max-width: none; height: auto; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .logos a { background: #ffffff; box-shadow: 0 0 0 8px #ffffff; } }
+:root[data-theme="dark"] .logos a { background: #ffffff; box-shadow: 0 0 0 8px #ffffff; }
 @media (max-width: 1100px) {
-  .about-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 440px; }
+  .about-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .logos { grid-template-columns: repeat(2, 180px); align-items: center; gap: 32px; }
 }
 
 /* news */
@@ -307,16 +306,8 @@ Ph.D. Student, Computational Mathematics, Science &amp; Engineering<br/>Michigan
 <p>My research interests lie at the intersection of deep learning and structural biology, with a focus on developing AI and data-driven methods for RNA structure prediction, cryo-EM-assisted modeling, and structure quality assessment, and building LLM-based agents that automate structural analysis. Looking ahead, I am especially interested in structural representation learning and generative modeling for bioinformatics.</p>
 </div>
 <div class="logos">
-<a class="logo-card" href="https://msu.edu/" rel="noopener" target="_blank">
-<img alt="Michigan State University logo" onerror="this.remove()" src="msu.png"/>
-<span class="lc-name">Michigan State University</span>
-<span class="lc-deg">Ph.D. · 2026 –</span>
-</a>
-<a class="logo-card" href="https://www.bu.edu/" rel="noopener" target="_blank">
-<img alt="Boston University logo" onerror="this.remove()" src="bu.png"/>
-<span class="lc-name">Boston University</span>
-<span class="lc-deg">M.S. · 2025</span>
-</a>
+<a href="https://msu.edu/" rel="noopener" style="aspect-ratio: 3230 / 2098;" target="_blank"><img alt="Michigan State University" src="msu.png" style="width: 118.9%; margin: -0.93% 0 0 -9.44%;"/></a>
+<a href="https://www.bu.edu/" rel="noopener" style="aspect-ratio: 443 / 199;" target="_blank"><img alt="Boston University" src="bu.png" style="width: 135.4%; margin: -45.15% 0 0 -17.83%;"/></a>
 </div>
 </div>
 
@@ -514,4 +505,27 @@ Ph.D. Student, Computational Mathematics, Science &amp; Engineering<br/>Michigan
     } else { fallback(); }
   });
 
-  // highlight
+  // highlight the section in view
+  var links = Array.prototype.slice.call(document.querySelectorAll('.navlinks a'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  function activate(id) {
+    links.forEach(function (a) { a.classList.toggle('active', a === map[id]); });
+    var a = map[id];
+    if (a && a.scrollIntoView) {
+      var box = a.closest('.navscroll');
+      var left = a.offsetLeft - box.clientWidth / 2 + a.offsetWidth / 2;
+      box.scrollTo({ left: left, behavior: 'smooth' });
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) activate(e.target.id); });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+  }
+  activate('about');
+})();
+</script>
+</body>
+</html>
